@@ -1,55 +1,1 @@
-/* Treehouse FSJS Techdegree
- * Project 4 - OOP Game App
- * Phrase.js */
-
-class Phrase {
-  constructor(phrase) {
-    this.phrase = phrase;
-  }
-
-  /**
-   * Display phrase on game scoreboard
-   */
-  addPhraseToDisplay() {
-    const divList = document.querySelector('#phrase ul');
-    const phraseLetters = this.phrase.split('');
-    for (let i = 0; i < phraseLetters.length; i++) {
-      const letterBlock = document.createElement('li');
-      if (phraseLetters[i] === ' ') {
-        letterBlock.textContent = phraseLetters[i];
-        letterBlock.className = 'space';
-      } else {
-        letterBlock.textContent = phraseLetters[i];
-        letterBlock.className = `hide letter ${phraseLetters[i]}`;
-      }
-      divList.appendChild(letterBlock);
-    }
-  }
-
-  /**
-   * Checks if passed letter is in phrase
-   * @param (string) letter - Letter to check
-   */
-  checkLetter(letter) {
-    const activeLetter = document.querySelector(`li.hide.letter.${letter}`);
-    if (activeLetter) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  /**
-   * Displays passed letter on screen after a match is found
-   * @param (string) letter - Letter to display
-   */
-  showMatchedLetter(letter) {
-    const activeLetter = document.querySelectorAll(`li.hide.letter.${letter}`);
-    if (this.checkLetter(letter)) {
-      for (let i = 0; i < activeLetter.length; i++) {
-        activeLetter[i].className = `show letter ${letter}`;
-      }
-    }
-  }
-
-}
+ class Phrase {   constructor(phrase) {    //convert phrase to lowercase    this.phrase = phrase.toLowerCase().replace(/[^\w\s]/g, "");   }       addPhraseToDisplay() {     const phraseLetters = [...this.phrase];     const phraseDiv = document.querySelector('#phrase');     const phraseUl = phraseDiv.querySelector('ul');     phraseLetters.forEach(phraseLetter => {      const phraseLi = document.createElement('li');      phraseLetter = phraseLetter.toUpperCase();      phraseLi.innerHTML = phraseLetter;      if(phraseLi.innerHTML != ' ') {        phraseLi.className += "hide";        phraseLi.className += " letter ";        phraseLi.className += phraseLetter;      } else {        phraseLi.className += "space";      }      phraseUl.appendChild(phraseLi);    })   }     checkLetter(inputLetter) {    if(this.phrase.includes(inputLetter)) {      return true;    } else {      return false;    }  }    showMatchedLetter(inputLetter) {     const phraseLis= document.querySelectorAll("#phrase li");      phraseLis.forEach(li => {        if(li.textContent === inputLetter.toUpperCase()) {         li.className -= "hide";         li.className += " show";        }      })    }    }
